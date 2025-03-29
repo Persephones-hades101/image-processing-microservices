@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from services.resize_service import router as resize_router
-from services.grayscale_service import router as grayscale_router
-from services.view_service import router as view_router
+from services.grayscale_service.grayscale_service import router as grayscale_router
+from services.resize_service.resize_service import router as resize_router
+from services.view_service.view_service import router as view_router
+
 
 app = FastAPI()
 

@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  resize:
+    build:
+      context: ./services
+      dockerfile: resize_service/Dockerfile
+
+    ports:
+      - '8002:8002'
+    volumes:
+      - ./storage:/app/storage
+
+  grayscale:
+    build:
+      context: ./services
+      dockerfile: grayscale_service/Dockerfile
+
+    ports:
+      - '8001:8001'
+    volumes:
+      - ./storage:/app/storage
+
+  view:
+    build:
+      context: ./services
+      dockerfile: view_service/Dockerfile
+
+    ports:
+      - '8003:8003'
+    volumes:
+      - ./storage:/app/storage

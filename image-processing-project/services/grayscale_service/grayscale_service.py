@@ -1,14 +1,14 @@
 import os
-from fastapi import APIRouter, UploadFile, File
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 from PIL import Image
 
-router = APIRouter()
+app = FastAPI()
 
 SAVE_DIR = "storage/"
 os.makedirs(SAVE_DIR, exist_ok=True)  # Ensure storage directory exists
 
-@router.post("/grayscale/")
+@app.post("/grayscale/")
 async def grayscale_image(file: UploadFile = File(...)):
     """Convert the uploaded image to grayscale and save it."""
     try:
@@ -22,3 +22,8 @@ async def grayscale_image(file: UploadFile = File(...)):
     
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+    
+    
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001)
