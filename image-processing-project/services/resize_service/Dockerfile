@@ -12,7 +12,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the service port
-EXPOSE 8001
+EXPOSE 8002
 
 # Run the service with Uvicorn
 CMD ["uvicorn", "resize:app", "--host", "0.0.0.0", "--port", "8002"]
