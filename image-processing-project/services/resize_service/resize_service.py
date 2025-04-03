@@ -1,12 +1,22 @@
 import os
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from PIL import Image
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 SAVE_DIR = "storage/"
 os.makedirs(SAVE_DIR, exist_ok=True)  # Ensure storage directory exists
+
 
 @app.post("/resize/")
 async def resize_image(file: UploadFile = File(...), width: int = 200, height: int = 200):
@@ -19,7 +29,7 @@ async def resize_image(file: UploadFile = File(...), width: int = 200, height: i
         image.save(save_path, format="PNG")
 
         return JSONResponse(content={"filename": file.filename, "saved_path": save_path, "message": "Image resized successfully"})
-    
+
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 

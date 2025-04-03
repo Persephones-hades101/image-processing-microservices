@@ -5,7 +5,6 @@ services:
     build:
       context: ./services
       dockerfile: grayscale_service/Dockerfile
-
     ports:
       - '8001:8001'
     volumes:
@@ -15,7 +14,6 @@ services:
     build:
       context: ./services
       dockerfile: resize_service/Dockerfile
-
     ports:
       - '8002:8002'
     volumes:
@@ -25,7 +23,6 @@ services:
     build:
       context: ./services
       dockerfile: view_service/Dockerfile
-
     ports:
       - '8003:8003'
     volumes:
@@ -37,7 +34,20 @@ services:
       - '80:80'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html:ro # Add this line for frontend
     depends_on:
       - resize
       - grayscale
       - view
+
+  # Add this new service for development (optional)
+  frontend:
+    image: node:16
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - '3000:3000'
+    command: sh -c "npm install -g live-server && live-server --port=3000"
+    depends_on:
+      - nginx
