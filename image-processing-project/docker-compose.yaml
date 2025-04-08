@@ -20,17 +20,18 @@ services:
       - ./storage:/app/storage
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./services
+      dockerfile: nginx/Dockerfile
     ports:
       - '80:80'
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend:/usr/share/nginx/html:ro # Add this line for frontend
+      # Only mount the storage directory, not the config
       - ./storage:/storage
     depends_on:
       - resize
       - grayscale
-      - frontend # Add this line for frontend
+      - frontend
 
   # Add this new service for development (optional)
   frontend:
