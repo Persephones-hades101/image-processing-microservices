@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grayscale
+  labels:
+    app: image-service
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grayscale
+  template:
+    metadata:
+      labels:
+        app: grayscale
+    spec:
+      containers:
+        - name: grayscale
+          image: sudhanshu177/image-processing-grayscale:latest
+          ports:
+            - containerPort: 8001
+          resources:
+            limits:
+              cpu: '500m'
+              memory: '512Mi'
+            requests:
+              cpu: '100m'
+              memory: '256Mi'
+          volumeMounts:
+            - name: storage
+              mountPath: /app/storage
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: nginx-storage

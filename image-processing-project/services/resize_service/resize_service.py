@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SAVE_DIR = "storage/"
+SAVE_DIR = "/app/storage/"
 os.makedirs(SAVE_DIR, exist_ok=True)  # Ensure storage directory exists
 
 
@@ -27,7 +27,12 @@ async def resize_image(file: UploadFile = File(...), width: int = 200, height: i
         image = image.resize((width, height))
 
         save_path = os.path.join(SAVE_DIR, f"resized_{file.filename}")
+        print(f"About to save file to: {save_path}")
+        print(f"Absolute path: {os.path.abspath(save_path)}")
+
         image.save(save_path, format="PNG")
+
+        print(f"File saved successfully: {save_path}")
 
         return JSONResponse(content={"filename": file.filename, "saved_path": save_path, "message": "Image resized successfully"})
 

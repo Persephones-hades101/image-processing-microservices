@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resize
+  labels:
+    app: image-service
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resize
+  template:
+    metadata:
+      labels:
+        app: resize
+    spec:
+      containers:
+        - name: resize
+          image: sudhanshu177/image-processing-resize:latest
+          ports:
+            - containerPort: 8002
+          volumeMounts:
+            - name: storage
+              mountPath: /app/storage
+          resources:
+            limits:
+              cpu: '500m'
+              memory: '512Mi'
+            requests:
+              cpu: '100m'
+              memory: '256Mi'
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: nginx-storage

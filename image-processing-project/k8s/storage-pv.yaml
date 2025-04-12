@@ -1,0 +1,17 @@
+# storage-pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    # This is the correct path format for Docker Desktop on Windows
+    path: '/run/desktop/mnt/host/c/Users/sudh4/Desktop/microservices_project/image-processing-project/storage'
+    type: DirectoryOrCreate
