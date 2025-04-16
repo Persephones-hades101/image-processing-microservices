@@ -46,7 +46,22 @@
         <h3>Convert to Grayscale</h3>
         <button class="btn" id="grayscaleBtn">Convert</button>
       </div>
+      <div class="option-card">
+        <h3>Apply Filters</h3>
+        <div class="form-group">
+          <label for="filterType">Filter Type:</label>
+          <select id="filterType">
+            <option value="blur">Blur</option>
+            <option value="contour">Contour</option>
+            <option value="emboss">Emboss</option>
+            <option value="sharpen">Sharpen</option>
+          </select>
+        </div>
+        <button class="btn" id="filterBtn">Apply Filter</button>
+      </div>
     </div>
+
+
 
     <div class="results-section" id="resultsSection" style="display: none;">
       <h2>Processed Images</h2>

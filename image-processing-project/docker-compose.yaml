@@ -41,3 +41,15 @@ services:
     working_dir: /app
     ports:
       - '3000:3000'
+    volumes:
+      - ./services/frontend:/app
+
+  filter:
+    build:
+      context: ./services
+      dockerfile: filter_service/Dockerfile
+    ports:
+      - '8003:8003'
+    volumes:
+      - ./storage:/app/storage
+      - ./services/filter_service:/app/filter_service

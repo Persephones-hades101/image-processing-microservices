@@ -18,7 +18,10 @@ app.add_middleware(
 SAVE_DIR = "/app/storage/"
 os.makedirs(SAVE_DIR, exist_ok=True)  # Ensure storage directory exists
 
-
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "service": "resize"}
 @app.post("/resize/")
 async def resize_image(file: UploadFile = File(...), width: int = 200, height: int = 200):
     """Resize the uploaded image and save it."""

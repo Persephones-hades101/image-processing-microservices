@@ -20,6 +20,18 @@ spec:
           image: sudhanshu177/image-processing-resize:latest
           ports:
             - containerPort: 8002
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 5
+            periodSeconds: 10
           volumeMounts:
             - name: storage
               mountPath: /app/storage

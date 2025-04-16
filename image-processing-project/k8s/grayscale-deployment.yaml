@@ -20,6 +20,18 @@ spec:
           image: sudhanshu177/image-processing-grayscale:latest
           ports:
             - containerPort: 8001
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 5
+            periodSeconds: 10
           resources:
             limits:
               cpu: '500m'

@@ -13,6 +13,23 @@ data:
 
       server {
         listen 80;
+        
+        
+          # Add these routes
+        location /api/grayscale/health {
+            proxy_pass http://grayscale/health;
+        }
+
+        location /api/resize/health {
+            proxy_pass http://resize/health;
+        }
+
+        # Add a general health endpoint for the gateway itself
+        location /health {
+            access_log off;
+            return 200 '{"status":"healthy","service":"nginx"}';
+            default_type application/json;
+        }
 
         location / {
           proxy_pass http://frontend:3000;

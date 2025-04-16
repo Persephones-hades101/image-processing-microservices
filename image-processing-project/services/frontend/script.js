@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const resultsSection = document.getElementById('resultsSection');
   const resultsContainer = document.getElementById('resultsContainer');
   const loading = document.getElementById('loading');
+  const filterBtn = document.getElementById('filterBtn');
+  const filterType = document.getElementById('filterType');
 
   const resizeBtn = document.getElementById('resizeBtn');
   const grayscaleBtn = document.getElementById('grayscaleBtn');
@@ -101,6 +103,17 @@ document.addEventListener('DOMContentLoaded', function () {
       '/grayscale', // Changed from full URL to just the endpoint
       {},
       `grayscale_${currentFile.name}`,
+    );
+  });
+
+  filterBtn.addEventListener('click', async () => {
+    if (!currentFile) return;
+    const selectedFilter = filterType.value;
+    console.log('Selected filter:', selectedFilter);
+    await processImage(
+      '/filter',
+      { filter_type: selectedFilter },
+      `${selectedFilter}_${currentFile.name}`,
     );
   });
 

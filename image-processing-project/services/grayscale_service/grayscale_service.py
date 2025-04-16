@@ -8,7 +8,10 @@ app = FastAPI()
 SAVE_DIR = "/app/storage/"
 os.makedirs(SAVE_DIR, exist_ok=True)  # Ensure storage directory exists
 
-
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "service": "grayscale"}
 @app.post("/grayscale/")
 async def grayscale_image(file: UploadFile = File(...)):
     """Convert the uploaded image to grayscale and save it."""

@@ -20,6 +20,18 @@ spec:
           image: sudhanshu177/image-processing-nginx:latest
           ports:
             - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
